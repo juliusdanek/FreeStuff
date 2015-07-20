@@ -67,9 +67,13 @@ class AddItemVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         let listing = PFObject(className: "Listing")
         listing.setObject(titleField.text, forKey: "title")
         listing.setObject(descriptionField.text, forKey: "description")
-        listing.saveInBackgroundWithBlock { (success, error) -> Void in
-            println("object has been saved")
+        PFGeoPoint.geoPointForCurrentLocationInBackground { (geopoint, error) -> Void in
+            listing.setObject(geopoint!, forKey: "location")
+            listing.saveInBackgroundWithBlock { (success, error) -> Void in
+                println("object has been saved")
+            }
         }
+
         
         
 //        let listing = Listing(title: titleField.text, category: nil, images: imageArray, description: descriptionField.text, location: nil)

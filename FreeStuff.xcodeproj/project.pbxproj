@@ -31,6 +31,7 @@
 		18FCCF591B5C72F500B4B160 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18FCCF581B5C72F500B4B160 /* SystemConfiguration.framework */; };
 		18FCCF5B1B5C72FF00B4B160 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 18FCCF5A1B5C72FF00B4B160 /* libz.dylib */; };
 		18FCCF5D1B5C730900B4B160 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 18FCCF5C1B5C730900B4B160 /* libsqlite3.dylib */; };
+		18FCCF5F1B5C893000B4B160 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18FCCF5E1B5C893000B4B160 /* ParseUI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		18FCCF581B5C72F500B4B160 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		18FCCF5A1B5C72FF00B4B160 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		18FCCF5C1B5C730900B4B160 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		18FCCF5E1B5C893000B4B160 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 				18FCCF451B5C666D00B4B160 /* CoreLocation.framework in Frameworks */,
 				18FCCF4B1B5C729600B4B160 /* Parse.framework in Frameworks */,
 				18FCCF4A1B5C729600B4B160 /* Bolts.framework in Frameworks */,
+				18FCCF5F1B5C893000B4B160 /* ParseUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,6 +191,7 @@
 			children = (
 				18FCCF5C1B5C730900B4B160 /* libsqlite3.dylib */,
 				18FCCF5A1B5C72FF00B4B160 /* libz.dylib */,
+				18FCCF5E1B5C893000B4B160 /* ParseUI.framework */,
 				18FCCF581B5C72F500B4B160 /* SystemConfiguration.framework */,
 				18FCCF561B5C72EC00B4B160 /* StoreKit.framework */,
 				18FCCF541B5C72E600B4B160 /* Security.framework */,
