@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18FB31761B5EC5FD00F0E253 /* CategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FB31751B5EC5FD00F0E253 /* CategoryVC.swift */; };
+		18FB31781B5EC65400F0E253 /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FB31771B5EC65400F0E253 /* Categories.swift */; };
+		18FB317A1B5EF9A100F0E253 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FB31791B5EF9A100F0E253 /* SettingsVC.swift */; };
 		18FCCF171B5C2DEE00B4B160 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCCF161B5C2DEE00B4B160 /* AppDelegate.swift */; };
 		18FCCF191B5C2DEE00B4B160 /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCCF181B5C2DEE00B4B160 /* ProductViewController.swift */; };
 		18FCCF1B1B5C2DEE00B4B160 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCCF1A1B5C2DEE00B4B160 /* SecondViewController.swift */; };
@@ -45,6 +48,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		18FB31751B5EC5FD00F0E253 /* CategoryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryVC.swift; sourceTree = "<group>"; };
+		18FB31771B5EC65400F0E253 /* Categories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Categories.swift; sourceTree = "<group>"; };
+		18FB31791B5EF9A100F0E253 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		18FCCF111B5C2DEE00B4B160 /* FreeStuff.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreeStuff.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18FCCF151B5C2DEE00B4B160 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18FCCF161B5C2DEE00B4B160 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -134,6 +140,7 @@
 				18FCCF411B5C528700B4B160 /* Add Listing */,
 				18FCCF401B5C527D00B4B160 /* Model */,
 				18FCCF181B5C2DEE00B4B160 /* ProductViewController.swift */,
+				18FB31791B5EF9A100F0E253 /* SettingsVC.swift */,
 				18FCCF1A1B5C2DEE00B4B160 /* SecondViewController.swift */,
 				18FCCF1C1B5C2DEE00B4B160 /* Main.storyboard */,
 				18FCCF1F1B5C2DEE00B4B160 /* Images.xcassets */,
@@ -172,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				18FCCF3E1B5C527700B4B160 /* Listing.swift */,
+				18FB31771B5EC65400F0E253 /* Categories.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -182,6 +190,7 @@
 				18FCCF381B5C30D300B4B160 /* AddItemViewController.swift */,
 				18FCCF461B5C709400B4B160 /* LocationFinder.swift */,
 				18FCCF3C1B5C4F8300B4B160 /* ImageGallery.swift */,
+				18FB31751B5EC5FD00F0E253 /* CategoryVC.swift */,
 			);
 			name = "Add Listing";
 			sourceTree = "<group>";
@@ -306,12 +315,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18FB317A1B5EF9A100F0E253 /* SettingsVC.swift in Sources */,
 				18FCCF471B5C709400B4B160 /* LocationFinder.swift in Sources */,
 				18FCCF3D1B5C4F8300B4B160 /* ImageGallery.swift in Sources */,
 				18FCCF3F1B5C527700B4B160 /* Listing.swift in Sources */,
+				18FB31761B5EC5FD00F0E253 /* CategoryVC.swift in Sources */,
 				18FCCF391B5C30D300B4B160 /* AddItemViewController.swift in Sources */,
 				18FCCF1B1B5C2DEE00B4B160 /* SecondViewController.swift in Sources */,
 				18FCCF171B5C2DEE00B4B160 /* AppDelegate.swift in Sources */,
+				18FB31781B5EC65400F0E253 /* Categories.swift in Sources */,
 				18FCCF191B5C2DEE00B4B160 /* ProductViewController.swift in Sources */,
 				18FCCF3B1B5C3D9000B4B160 /* ImageGalleryCell.swift in Sources */,
 			);
@@ -517,6 +529,7 @@
 				18FCCF341B5C2DEE00B4B160 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		18FCCF351B5C2DEE00B4B160 /* Build configuration list for PBXNativeTarget "FreeStuffTests" */ = {
 			isa = XCConfigurationList;
@@ -525,6 +538,7 @@
 				18FCCF371B5C2DEE00B4B160 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -14,8 +14,6 @@ import Bolts
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-//    var listings: [Listing]?
-
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         Parse.enableLocalDatastore()
@@ -23,7 +21,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             clientKey: "oKSkzRobkrSnaizae1Q9tPA6hrJylbgMggtW1o5S")
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         // Override point for customization after application launch.
+        
+        //make sure that user is uniquely identified on Parse database by calling signup function
         signup()
+        
+        //when app first starts and there are no user settings as of yet, initialize with these ones
+        if NSUserDefaults.standardUserDefaults().objectForKey("standardSettings") == nil {
+            var settingsDict = [String: AnyObject]()
+            settingsDict["searchDistance"] = Double(20.0)
+            NSUserDefaults.standardUserDefaults().setObject(settingsDict, forKey: "standardSettings")
+        }
+        
         return true
     }
 
@@ -49,12 +57,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
+    //TODO: Might have to store some stuff in keychain because Vendor ID does not stay the same across device
     func signup() {
         //checking if there is a user cached
         var currentUser = PFUser.currentUser()
         if currentUser != nil {
+            //simple return statements
             return
-            // Do stuff with the user
         } else {
             //if not, try to log in with the unique device ID --> All listings will always be associated with a device
             PFUser.logInWithUsernameInBackground(UIDevice.currentDevice().identifierForVendor.UUIDString, password:"FreeStuff") {

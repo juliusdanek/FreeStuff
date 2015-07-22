@@ -11,6 +11,22 @@ import UIKit
 
 extension AddItemVC {
     
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("imageCell", forIndexPath: indexPath) as! ImageGalleryCell
+        //check whether there is an image available in the imageArray, if not then we can assume that images will be uploaded from button
+        if imageArray.endIndex > indexPath.row && imageArray.count != 0 {
+            cell.imageView.image = imageArray[indexPath.row]
+            cell.addButton.hidden = true
+        } else {
+            cell.addButton.addTarget(self, action: "addPicture", forControlEvents: .TouchUpInside)
+        }
+        return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 3
+    }
+    
     func addPicture () {
         //Setting up an alertView to ask user whether he wants to have a picture from an Album or camera
         let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
