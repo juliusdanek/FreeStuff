@@ -15,6 +15,7 @@ class ProductViewController: PFQueryTableViewController, UISearchBarDelegate {
     var userLocation: PFGeoPoint?
     var searchDistance: Double!
     @IBOutlet weak var searchBar: UISearchBar!
+    var tableViewHeight: CGFloat!
     
     //Setting this table up to be a Parse query table
     override init(style: UITableViewStyle, className: String!) {
@@ -32,6 +33,8 @@ class ProductViewController: PFQueryTableViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableViewHeight = tableView.contentSize.height
         
         //addButton for navigating to add screen
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "sellItem")
@@ -55,6 +58,7 @@ class ProductViewController: PFQueryTableViewController, UISearchBarDelegate {
         searchDistance = settingsDict["searchDistance"] as! Double
     }
     
+    //MARK: TableView methods
     override func queryForTable() -> PFQuery {
         var query:PFQuery = PFQuery(className:self.parseClassName!)
         PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
@@ -82,18 +86,43 @@ class ProductViewController: PFQueryTableViewController, UISearchBarDelegate {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath, object: PFObject?) -> PFTableViewCell? {
         
-        let cellIdentifier:String = "listingCell"
-        var cell:PFTableViewCell? = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as? PFTableViewCell
+        var cell = tableView.dequeueReusableCellWithIdentifier("listingCell") as? ListingViewCell
         if(cell == nil) {
-            cell = PFTableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: cellIdentifier)
+            cell = ListingViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "listingCell")
         }
+        
+        //setting the placeholder image
+        cell?.listingImage.image = UIImage(named: "placeholder")
+        
+        //gettning the title
         if let pfObject = object {
-            cell?.textLabel?.text = pfObject["title"] as? String
+            cell?.title.text = pfObject["title"] as? String
         }
+        
+        //Getting the images for the listings in the background
+        if let imageArray = object?["images"] as? [PFFile] {
+            if imageArray.count != 0 {
+                cell?.listingImage.file = imageArray[0]
+                cell?.listingImage.loadInBackground()
+            }
+        }
+        
         return cell;
     }
-
     
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        //implementing a relative function to get cell height, to adjust for different phones 
+        return tableViewHeight/10
+    }
+    
+    //show details of the listing
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let object = objectAtIndexPath(indexPath)
+        details(object!)
+    }
+    
+    
+    //MARK: Seguing methods
     //function used to present addVC
     func sellItem() {
         //instantiate add viewcontroller
@@ -111,6 +140,16 @@ class ProductViewController: PFQueryTableViewController, UISearchBarDelegate {
         navigationController?.pushViewController(settingsVC, animated: true)
     }
     
+    //present the details VC and pass the current object from the cell row
+    func details (currentObject: PFObject) {
+        let detailVC = storyboard?.instantiateViewControllerWithIdentifier("DetailVC") as! DetailVC
+        detailVC.currentListing = currentObject
+        detailVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+    
+    //MARK: SearchBar methods
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
         
         searchBar.resignFirstResponder()
