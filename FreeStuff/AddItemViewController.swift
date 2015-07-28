@@ -25,6 +25,9 @@ class AddItemVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     let imagePicker = UIImagePickerController()
     let locationManager = CLLocationManager()
     
+    //initializing listing at the very beginning
+    let listing = Listing()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -60,6 +63,7 @@ class AddItemVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         categoryPicker.layer.borderWidth = 1
     }
     
+    //MARK: Work this over
     func textFieldDidBeginEditing(textField: UITextField) {
         if textField.text != "" {
             textField.layer.borderColor = UIColor.greenColor().CGColor
@@ -69,32 +73,24 @@ class AddItemVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     }
     
     func previewListing () {
-        let listing = PFObject(className: "Listing")
-        var listingImages = [PFFile]()
         let searchText = titleField.text.lowercaseString + " " + descriptionField.text.lowercaseString
-        listing.setObject(searchText, forKey: "searchText")
-        listing.setObject(titleField.text, forKey: "title")
-        listing.setObject(descriptionField.text, forKey: "description")
-        listing["user"] = PFUser.currentUser()!
+        listing.title = titleField.text
+        listing.user = PFUser.currentUser()!
+        listing.searchText = searchText
+        listing.listingDescription = descriptionField.text
+        PFGeoPoint.geoPointForCurrentLocationInBackground { (geopoint, error) -> Void in
+            self.listing.location = geopoint!
+        }
+        listing.categories = [categoryPicker.titleLabel!.text!]
+        listing.images = []
         if imageArray.count != 0 {
             for image in imageArray {
                 let imageData = UIImageJPEGRepresentation(image, 1.0)
                 let imageFile = PFFile(data: imageData)
-                listingImages.append(imageFile)
+                listing.images.append(imageFile)
             }
         }
-        listing.addObjectsFromArray(listingImages, forKey: "images")
-        listing.setObject([categoryPicker.titleLabel!.text!], forKey: "categories")
-        PFGeoPoint.geoPointForCurrentLocationInBackground { (geopoint, error) -> Void in
-            listing.setObject(geopoint!, forKey: "location")
-            listing.saveInBackgroundWithBlock { (success, error) -> Void in
-                println("object has been saved")
-            }
-        }
-
-//        let listing = Listing(title: titleField.text, category: nil, images: imageArray, description: descriptionField.text, location: nil)
-//        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-//        appDelegate.listings?.append(listing)
+        listing.saveInBackground()
         dismiss()
     }
     

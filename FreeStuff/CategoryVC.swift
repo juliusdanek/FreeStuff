@@ -23,8 +23,8 @@ class CategoryVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //setting up NavBar
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "dismiss")
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "done")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "dismiss")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "done")
         navigationItem.rightBarButtonItem?.enabled = false
         navigationItem.title = "Choose Category"
     }

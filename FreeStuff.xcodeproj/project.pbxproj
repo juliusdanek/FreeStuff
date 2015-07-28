@@ -12,7 +12,6 @@
 		18FB317A1B5EF9A100F0E253 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FB31791B5EF9A100F0E253 /* SettingsVC.swift */; };
 		18FB317E1B60535100F0E253 /* ListingViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FB317D1B60535100F0E253 /* ListingViewCell.swift */; };
 		18FB31811B6059D700F0E253 /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FB31801B6059D700F0E253 /* DetailVC.swift */; };
-		18FB31831B606D8100F0E253 /* PagedScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FB31821B606D8100F0E253 /* PagedScrollViewController.swift */; };
 		18FB31851B60704900F0E253 /* extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FB31841B60704900F0E253 /* extension.swift */; };
 		18FCCF171B5C2DEE00B4B160 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCCF161B5C2DEE00B4B160 /* AppDelegate.swift */; };
 		18FCCF191B5C2DEE00B4B160 /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCCF181B5C2DEE00B4B160 /* ProductViewController.swift */; };
@@ -57,7 +56,6 @@
 		18FB31791B5EF9A100F0E253 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		18FB317D1B60535100F0E253 /* ListingViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListingViewCell.swift; sourceTree = "<group>"; };
 		18FB31801B6059D700F0E253 /* DetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
-		18FB31821B606D8100F0E253 /* PagedScrollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagedScrollViewController.swift; sourceTree = "<group>"; };
 		18FB31841B60704900F0E253 /* extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extension.swift; sourceTree = "<group>"; };
 		18FCCF111B5C2DEE00B4B160 /* FreeStuff.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreeStuff.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18FCCF151B5C2DEE00B4B160 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -160,7 +158,6 @@
 				18FCCF401B5C527D00B4B160 /* Model */,
 				18FB317F1B6054B800F0E253 /* View Listings */,
 				18FB31791B5EF9A100F0E253 /* SettingsVC.swift */,
-				18FB31821B606D8100F0E253 /* PagedScrollViewController.swift */,
 				18FCCF1A1B5C2DEE00B4B160 /* SecondViewController.swift */,
 				18FCCF1C1B5C2DEE00B4B160 /* Main.storyboard */,
 				18FCCF1F1B5C2DEE00B4B160 /* Images.xcassets */,
@@ -341,7 +338,6 @@
 				18FB31851B60704900F0E253 /* extension.swift in Sources */,
 				18FCCF3D1B5C4F8300B4B160 /* ImageGallery.swift in Sources */,
 				18FCCF3F1B5C527700B4B160 /* Listing.swift in Sources */,
-				18FB31831B606D8100F0E253 /* PagedScrollViewController.swift in Sources */,
 				18FB31761B5EC5FD00F0E253 /* CategoryVC.swift in Sources */,
 				18FB317E1B60535100F0E253 /* ListingViewCell.swift in Sources */,
 				18FCCF391B5C30D300B4B160 /* AddItemViewController.swift in Sources */,

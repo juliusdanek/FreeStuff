@@ -94,18 +94,16 @@ class ProductViewController: PFQueryTableViewController, UISearchBarDelegate {
         //setting the placeholder image
         cell?.listingImage.image = UIImage(named: "placeholder")
         
-        //gettning the title
-        if let pfObject = object {
-            cell?.title.text = pfObject["title"] as? String
-        }
-        
-        //Getting the images for the listings in the background
-        if let imageArray = object?["images"] as? [PFFile] {
-            if imageArray.count != 0 {
-                cell?.listingImage.file = imageArray[0]
+        //getting the title and images
+        if let currentListing = object as? Listing {
+            cell?.title.text = currentListing.title
+            if currentListing.images.count != 0 {
+                cell?.listingImage.file = currentListing.images[0]
                 cell?.listingImage.loadInBackground()
             }
         }
+        
+
         
         return cell;
     }
@@ -117,8 +115,8 @@ class ProductViewController: PFQueryTableViewController, UISearchBarDelegate {
     
     //show details of the listing
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let object = objectAtIndexPath(indexPath)
-        details(object!)
+        let object = objectAtIndexPath(indexPath) as! Listing
+        details(object)
     }
     
     
@@ -141,10 +139,9 @@ class ProductViewController: PFQueryTableViewController, UISearchBarDelegate {
     }
     
     //present the details VC and pass the current object from the cell row
-    func details (currentObject: PFObject) {
+    func details (currentObject: Listing) {
         let detailVC = storyboard?.instantiateViewControllerWithIdentifier("DetailVC") as! DetailVC
         detailVC.currentListing = currentObject
-        detailVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(detailVC, animated: true)
     }
     

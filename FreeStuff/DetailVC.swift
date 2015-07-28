@@ -14,38 +14,39 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
     
     //MARK: Outlets
     @IBOutlet weak var scrollView: UIScrollView!
-//    @IBOutlet weak var listingTitle: UILabel!
-//    @IBOutlet weak var listingDescription: UITextView!
+    @IBOutlet weak var listingTitle: UILabel!
+    @IBOutlet weak var listingDescription: UITextView!
 //    @IBOutlet weak var claimButton: UIButton!
-//    @IBOutlet weak var distanceButton: UIButton!
+//    @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var pageControl: UIPageControl!
     
-    var currentListing: PFObject?
+    var currentListing: Listing?
     
-    var imageArray: [UIImage] = []
-    var imageViewArray: [UIImageView?] = []
+    var imageArray: [PFFile] = []
+    var imageViewArray: [PFImageView?] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.tabBarController?.tabBar.hidden = true
+        
         scrollView.delegate = self
         
-        println(scrollView.contentSize)
-        println(scrollView.frame)
-        println(scrollView.bounds)
-        
-        let makeFrame 
-        
-        println(view.bounds)
-        println(view.frame)
-        println(super.view.frame)
-        
-        println(self.navigationController?.navigationBar.frame)
+        if let listing = currentListing {
+            if listing.images.count != 0 {
+                imageArray = listing.images
+            }
+            listingTitle.text = listing.title
 
-        
-        imageArray = [UIImage(named: "placeholder")!,
-            UIImage(named: "placeholder")!,
-            UIImage(named: "placeholder")!]
+            listingDescription.text = listing.listingDescription
+            
+            if let geopoint = listing["location"] as? PFGeoPoint {
+                PFGeoPoint.geoPointForCurrentLocationInBackground({ (currentGeoPoint, error) -> Void in
+                    println(currentGeoPoint!)
+                    println(currentGeoPoint!.distanceInMilesTo(geopoint))
+                })
+            }
+        }
         
         pageControl.currentPage = 0
         pageControl.numberOfPages = imageArray.count
@@ -53,24 +54,36 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         for _ in 0..<imageArray.count {
             imageViewArray.append(nil)
         }
-        
-        // 4
-        let pagesScrollViewSize = scrollView.frame.size
-        scrollView.contentSize = CGSize(width: pagesScrollViewSize.width * CGFloat(imageArray.count),
-            height: pagesScrollViewSize.height)
-        
-        // 5
-        loadVisiblePages()
-        
-//        if let listing = currentListing {
-//            listingTitle.text = listing["title"] as? String
-//            
-//            listingDescription.text = listing["description"] as? String
-//        }
+
+
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         // Load the pages that are now on screen
+        loadVisiblePages()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        //this is called after the autolayout has been enacted and the pages views adjusted
+                
+        //the content size needs to be adjusted for the number of pages
+        let pagesScrollViewSize = scrollView.frame.size
+        scrollView.contentSize = CGSize(width: pagesScrollViewSize.width * CGFloat(imageArray.count),
+            height: pagesScrollViewSize.height)
+
+        
+        //load pages needs to happen here, after layout already adjusted the subviews
         loadVisiblePages()
     }
     
@@ -83,20 +96,23 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         
         // 1
         if let pageView = imageViewArray[page] {
+            return
             // Do nothing. The view is already loaded.
         } else {
             // 2
             var frame = scrollView.bounds
             frame.origin.x = frame.size.width * CGFloat(page)
-            frame.origin.y = 0.0
+            frame.origin.y = 0
             
-            // 3
-            let newPageView = UIImageView(image: imageArray[page])
+            //set up a new PFImageView that allows the display of a placeholder or the display of the image, if loaded
+            let newPageView = PFImageView(image: UIImage(named: "placeholder"))
+            newPageView.file = imageArray[page]
+            newPageView.loadInBackground()
             newPageView.contentMode = .ScaleAspectFit
             newPageView.frame = frame
             scrollView.addSubview(newPageView)
             
-            // 4
+            //updated the imageViewArray
             imageViewArray[page] = newPageView
         }
     }
@@ -117,7 +133,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
     func loadVisiblePages() {
         // First, determine which page is currently visible
         let pageWidth = scrollView.frame.size.width
-        let page = Int(floor((scrollView.contentOffset.x * 2.0 + pageWidth) / (pageWidth * 2.0)))
+        let page = Int(scrollView.contentOffset.x / pageWidth)
         
         // Update the page control
         pageControl.currentPage = page
