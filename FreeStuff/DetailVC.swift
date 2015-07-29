@@ -101,7 +101,18 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
     }
     
     func publish () {
-        println("publish")
+        currentListing?.published = true
+        let activityView = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+        activityView.center = self.view.center
+        activityView.startAnimating()
+        view.addSubview(activityView)
+        currentListing?.saveInBackgroundWithBlock({ (success, error) -> Void in
+            if success {
+                activityView.removeFromSuperview()
+                activityView.stopAnimating()
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+        })
     }
     
     //From: http://www.raywenderlich.com/76436/use-uiscrollview-scroll-zoom-content-swift

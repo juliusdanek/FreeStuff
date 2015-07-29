@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		189943C01B6937080028333F /* MapViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189943BF1B6937080028333F /* MapViewVC.swift */; };
 		18FB31761B5EC5FD00F0E253 /* CategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FB31751B5EC5FD00F0E253 /* CategoryVC.swift */; };
 		18FB31781B5EC65400F0E253 /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FB31771B5EC65400F0E253 /* Categories.swift */; };
 		18FB317A1B5EF9A100F0E253 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FB31791B5EF9A100F0E253 /* SettingsVC.swift */; };
@@ -25,7 +26,7 @@
 		18FCCF3D1B5C4F8300B4B160 /* ImageGallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCCF3C1B5C4F8300B4B160 /* ImageGallery.swift */; };
 		18FCCF3F1B5C527700B4B160 /* Listing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCCF3E1B5C527700B4B160 /* Listing.swift */; };
 		18FCCF451B5C666D00B4B160 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18FCCF421B5C664600B4B160 /* CoreLocation.framework */; };
-		18FCCF471B5C709400B4B160 /* LocationFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCCF461B5C709400B4B160 /* LocationFinder.swift */; };
+		18FCCF471B5C709400B4B160 /* TextInputFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FCCF461B5C709400B4B160 /* TextInputFunctions.swift */; };
 		18FCCF4A1B5C729600B4B160 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18FCCF481B5C729600B4B160 /* Bolts.framework */; };
 		18FCCF4B1B5C729600B4B160 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18FCCF491B5C729600B4B160 /* Parse.framework */; };
 		18FCCF4D1B5C72BA00B4B160 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18FCCF4C1B5C72BA00B4B160 /* AudioToolbox.framework */; };
@@ -51,6 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		189943BF1B6937080028333F /* MapViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewVC.swift; sourceTree = "<group>"; };
 		18FB31751B5EC5FD00F0E253 /* CategoryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryVC.swift; sourceTree = "<group>"; };
 		18FB31771B5EC65400F0E253 /* Categories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Categories.swift; sourceTree = "<group>"; };
 		18FB31791B5EF9A100F0E253 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
@@ -73,7 +75,7 @@
 		18FCCF3C1B5C4F8300B4B160 /* ImageGallery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageGallery.swift; sourceTree = "<group>"; };
 		18FCCF3E1B5C527700B4B160 /* Listing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Listing.swift; sourceTree = "<group>"; };
 		18FCCF421B5C664600B4B160 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		18FCCF461B5C709400B4B160 /* LocationFinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationFinder.swift; sourceTree = "<group>"; };
+		18FCCF461B5C709400B4B160 /* TextInputFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextInputFunctions.swift; sourceTree = "<group>"; };
 		18FCCF481B5C729600B4B160 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		18FCCF491B5C729600B4B160 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		18FCCF4C1B5C72BA00B4B160 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -205,9 +207,10 @@
 			isa = PBXGroup;
 			children = (
 				18FCCF381B5C30D300B4B160 /* AddItemViewController.swift */,
-				18FCCF461B5C709400B4B160 /* LocationFinder.swift */,
+				18FCCF461B5C709400B4B160 /* TextInputFunctions.swift */,
 				18FCCF3C1B5C4F8300B4B160 /* ImageGallery.swift */,
 				18FB31751B5EC5FD00F0E253 /* CategoryVC.swift */,
+				189943BF1B6937080028333F /* MapViewVC.swift */,
 			);
 			name = "Add Listing";
 			sourceTree = "<group>";
@@ -333,9 +336,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				18FB317A1B5EF9A100F0E253 /* SettingsVC.swift in Sources */,
-				18FCCF471B5C709400B4B160 /* LocationFinder.swift in Sources */,
+				18FCCF471B5C709400B4B160 /* TextInputFunctions.swift in Sources */,
 				18FB31811B6059D700F0E253 /* DetailVC.swift in Sources */,
 				18FB31851B60704900F0E253 /* extension.swift in Sources */,
+				189943C01B6937080028333F /* MapViewVC.swift in Sources */,
 				18FCCF3D1B5C4F8300B4B160 /* ImageGallery.swift in Sources */,
 				18FCCF3F1B5C527700B4B160 /* Listing.swift in Sources */,
 				18FB31761B5EC5FD00F0E253 /* CategoryVC.swift in Sources */,
