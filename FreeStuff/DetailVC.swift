@@ -16,9 +16,8 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var listingTitle: UILabel!
     @IBOutlet weak var listingDescription: UITextView!
-//    @IBOutlet weak var claimButton: UIButton!
-//    @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var pageControl: UIPageControl!
+    @IBOutlet weak var distanceButton: UIBarButtonItem!
     
     var currentListing: Listing?
     
@@ -32,7 +31,14 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         
         scrollView.delegate = self
         
+        //checking whether a listing has been passed, then configuring the view
         if let listing = currentListing {
+            
+            //if it isn't published, show the publishing button
+            if listing.published == false {
+                navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Publish", style: .Plain, target: self, action: "publish")
+            }
+            
             if listing.images.count != 0 {
                 imageArray = listing.images
             }
@@ -40,10 +46,17 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
 
             listingDescription.text = listing.listingDescription
             
+            //configuring the distance button with the map
             if let geopoint = listing["location"] as? PFGeoPoint {
                 PFGeoPoint.geoPointForCurrentLocationInBackground({ (currentGeoPoint, error) -> Void in
-                    println(currentGeoPoint!)
-                    println(currentGeoPoint!.distanceInMilesTo(geopoint))
+                    let distance = Int(currentGeoPoint!.distanceInMilesTo(geopoint))
+                    if distance == 0 {
+                        self.distanceButton.title = NSString(string: " 🚗 <1") as String
+                    } else if distance > 100 {
+                        self.distanceButton.title = " 🚗 >100"
+                    } else {
+                        self.distanceButton.title = "\(distance)"
+                    }
                 })
             }
         }
@@ -87,6 +100,10 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         loadVisiblePages()
     }
     
+    func publish () {
+        println("publish")
+    }
+    
     //From: http://www.raywenderlich.com/76436/use-uiscrollview-scroll-zoom-content-swift
     func loadPage(page: Int) {
         if page < 0 || page >= imageArray.count {
@@ -105,9 +122,27 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
             frame.origin.y = 0
             
             //set up a new PFImageView that allows the display of a placeholder or the display of the image, if loaded
-            let newPageView = PFImageView(image: UIImage(named: "placeholder"))
-            newPageView.file = imageArray[page]
-            newPageView.loadInBackground()
+            let newPageView = PFImageView()
+            let imageFile = imageArray[page]
+            
+            //if listing is published, i.e. comes from database, download files in background
+            if currentListing!.published {
+                newPageView.image = UIImage(named: "placeholder")
+                newPageView.file = imageFile
+                newPageView.loadInBackground()
+            // if it is not, we need to extract the previously packaged image files again
+            } else {
+                //extracting image from file
+                imageFile.getDataInBackgroundWithBlock({ (imageData, error) -> Void in
+                    if error == nil {
+                        let image = UIImage(data: imageData!)
+                        //updating UI on main thread
+                        dispatch_async(dispatch_get_main_queue(), {
+                            newPageView.image = image
+                        })
+                    }
+                })
+            }
             newPageView.contentMode = .ScaleAspectFit
             newPageView.frame = frame
             scrollView.addSubview(newPageView)

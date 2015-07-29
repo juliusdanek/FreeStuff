@@ -90,8 +90,10 @@ class AddItemVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
                 listing.images.append(imageFile)
             }
         }
-        listing.saveInBackground()
-        dismiss()
+        listing.published = false
+        let detailVC = storyboard?.instantiateViewControllerWithIdentifier("DetailVC") as! DetailVC
+        detailVC.currentListing = listing
+        navigationController?.pushViewController(detailVC, animated: true)
     }
     
     func pickCategory() {
