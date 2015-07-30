@@ -13,4 +13,5 @@ class ImageGalleryCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var addButton: UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
 }

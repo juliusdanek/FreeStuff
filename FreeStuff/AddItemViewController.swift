@@ -24,9 +24,10 @@ class AddItemVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     
     var activeField: UIView!
     
+    //imagePicking variables
     var imageArray = [UIImage]()
     let imagePicker = UIImagePickerController()
-    let locationManager = CLLocationManager()
+    var collectionCounter = 1
     
     //initializing listing at the very beginning
     let listing = Listing()

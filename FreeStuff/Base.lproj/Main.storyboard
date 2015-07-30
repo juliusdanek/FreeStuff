@@ -180,47 +180,78 @@
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
                                                         </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zwj-xF-1gI">
+                                                            <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="25" id="Pzi-o5-c4f"/>
+                                                                <constraint firstAttribute="height" constant="25" id="dR4-tM-Fdu"/>
+                                                            </constraints>
+                                                            <state key="normal" image="Cancel Filled-64">
+                                                                <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </state>
+                                                            <variation key="default">
+                                                                <mask key="constraints">
+                                                                    <exclude reference="Pzi-o5-c4f"/>
+                                                                    <exclude reference="dR4-tM-Fdu"/>
+                                                                </mask>
+                                                            </variation>
+                                                            <variation key="heightClass=regular-widthClass=compact">
+                                                                <mask key="constraints">
+                                                                    <include reference="Pzi-o5-c4f"/>
+                                                                    <include reference="dR4-tM-Fdu"/>
+                                                                </mask>
+                                                            </variation>
+                                                        </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <constraints>
+                                                    <constraint firstAttribute="trailingMargin" secondItem="zwj-xF-1gI" secondAttribute="trailing" constant="-8" id="1YU-km-pqb"/>
                                                     <constraint firstAttribute="trailingMargin" secondItem="yte-IE-dx0" secondAttribute="trailing" constant="-1" id="4UD-VH-OtE"/>
                                                     <constraint firstAttribute="centerX" secondItem="h9I-Dl-2Q3" secondAttribute="centerX" id="7OC-Gt-iUZ"/>
                                                     <constraint firstAttribute="centerY" secondItem="h9I-Dl-2Q3" secondAttribute="centerY" id="BJF-Ow-vAh"/>
                                                     <constraint firstItem="yte-IE-dx0" firstAttribute="top" secondItem="fim-rn-04l" secondAttribute="topMargin" constant="-2" id="Bhf-rM-sdw"/>
                                                     <constraint firstAttribute="bottomMargin" secondItem="yte-IE-dx0" secondAttribute="bottom" constant="1" id="oSk-x8-PuH"/>
                                                     <constraint firstItem="yte-IE-dx0" firstAttribute="leading" secondItem="fim-rn-04l" secondAttribute="leadingMargin" id="qRd-1i-pnq"/>
+                                                    <constraint firstItem="zwj-xF-1gI" firstAttribute="top" secondItem="fim-rn-04l" secondAttribute="topMargin" constant="-8" id="ywz-gP-fQ6"/>
                                                 </constraints>
                                                 <variation key="default">
                                                     <mask key="subviews">
                                                         <exclude reference="yte-IE-dx0"/>
                                                         <exclude reference="h9I-Dl-2Q3"/>
+                                                        <exclude reference="zwj-xF-1gI"/>
                                                     </mask>
                                                     <mask key="constraints">
-                                                        <exclude reference="7OC-Gt-iUZ"/>
-                                                        <exclude reference="BJF-Ow-vAh"/>
                                                         <exclude reference="4UD-VH-OtE"/>
                                                         <exclude reference="Bhf-rM-sdw"/>
                                                         <exclude reference="oSk-x8-PuH"/>
                                                         <exclude reference="qRd-1i-pnq"/>
+                                                        <exclude reference="7OC-Gt-iUZ"/>
+                                                        <exclude reference="BJF-Ow-vAh"/>
+                                                        <exclude reference="1YU-km-pqb"/>
+                                                        <exclude reference="ywz-gP-fQ6"/>
                                                     </mask>
                                                 </variation>
                                                 <variation key="heightClass=regular-widthClass=compact">
                                                     <mask key="subviews">
                                                         <include reference="yte-IE-dx0"/>
                                                         <include reference="h9I-Dl-2Q3"/>
+                                                        <include reference="zwj-xF-1gI"/>
                                                     </mask>
                                                     <mask key="constraints">
-                                                        <include reference="7OC-Gt-iUZ"/>
-                                                        <include reference="BJF-Ow-vAh"/>
                                                         <include reference="4UD-VH-OtE"/>
                                                         <include reference="Bhf-rM-sdw"/>
                                                         <include reference="oSk-x8-PuH"/>
                                                         <include reference="qRd-1i-pnq"/>
+                                                        <include reference="7OC-Gt-iUZ"/>
+                                                        <include reference="BJF-Ow-vAh"/>
+                                                        <include reference="1YU-km-pqb"/>
+                                                        <include reference="ywz-gP-fQ6"/>
                                                     </mask>
                                                 </variation>
                                                 <connections>
                                                     <outlet property="addButton" destination="h9I-Dl-2Q3" id="koO-Hh-i0A"/>
+                                                    <outlet property="deleteButton" destination="zwj-xF-1gI" id="JZX-Po-pSs"/>
                                                     <outlet property="imageView" destination="yte-IE-dx0" id="de2-cK-2Uu"/>
                                                 </connections>
                                             </collectionViewCell>
@@ -818,6 +849,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Cancel Filled-64" width="64" height="64"/>
         <image name="first" width="30" height="30"/>
         <image name="second" width="30" height="30"/>
     </resources>

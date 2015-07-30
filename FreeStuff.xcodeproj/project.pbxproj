@@ -155,7 +155,6 @@
 			isa = PBXGroup;
 			children = (
 				18FCCF161B5C2DEE00B4B160 /* AppDelegate.swift */,
-				18FCCF3A1B5C3D9000B4B160 /* ImageGalleryCell.swift */,
 				18FCCF411B5C528700B4B160 /* Add Listing */,
 				18FCCF401B5C527D00B4B160 /* Model */,
 				18FB317F1B6054B800F0E253 /* View Listings */,
@@ -209,6 +208,7 @@
 				18FCCF381B5C30D300B4B160 /* AddItemViewController.swift */,
 				18FCCF461B5C709400B4B160 /* TextInputFunctions.swift */,
 				18FCCF3C1B5C4F8300B4B160 /* ImageGallery.swift */,
+				18FCCF3A1B5C3D9000B4B160 /* ImageGalleryCell.swift */,
 				18FB31751B5EC5FD00F0E253 /* CategoryVC.swift */,
 				189943BF1B6937080028333F /* MapViewVC.swift */,
 			);
