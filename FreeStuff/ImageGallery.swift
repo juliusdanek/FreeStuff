@@ -24,13 +24,19 @@ extension AddItemVC {
             cell.imageView.image = imageArray[imageArray.count - indexPath.row]
             cell.addButton.hidden = true
             cell.deleteButton.hidden = false
-            cell.deleteButton.addTarget(self, action: "deletePicture", forControlEvents: .TouchUpInside)
+            cell.deleteButton.addTarget(self, action: "deletePicture:", forControlEvents: .TouchUpInside)
         }
         return cell
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return collectionCounter
+        //if there are picture in array, then set the collection view border to finished.
+        if imageArray.count > 0 {
+            setBorder(collectionView, finished: true)
+        } else {
+            setBorder(collectionView, finished: false)
+        }
+        return (imageArray.count + 1)
     }
     
     func addPicture () {
@@ -48,9 +54,15 @@ extension AddItemVC {
         self.presentViewController(alertVC, animated: true, completion: nil)
     }
     
-    func deletePicture () {
-        
-        println("delete picture")
+    //delete picture function. the button gets passed into the function
+    func deletePicture (button: UIButton) {
+        //to find the indexPath we need to take the origin of the button's superview, as the button is in its own view (the cell)
+        let indexPath = imageGallery.indexPathForItemAtPoint(button.superview!.frame.origin)
+        //now perform batch updates to delete the picture. first from the table view, then from the imageArray.
+        imageGallery.performBatchUpdates({ () -> Void in
+            self.imageGallery.deleteItemsAtIndexPaths([indexPath!])
+            self.imageArray.removeAtIndex(self.imageArray.count - indexPath!.row)
+        }, completion: nil)
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
@@ -62,7 +74,6 @@ extension AddItemVC {
             imageArray.append(pickedImage)
         }
         //reload our gallery to display updated picture
-        collectionCounter += 1
         imageGallery.reloadData()
         dismissViewControllerAnimated(true, completion: nil)
     }

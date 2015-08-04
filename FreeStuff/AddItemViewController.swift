@@ -22,17 +22,19 @@ class AddItemVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     
     @IBOutlet weak var contentView: UIView!
     
+    var validationDict: [UIView: Bool]!
+    
     var activeField: UIView!
     
     //imagePicking variables
     var imageArray = [UIImage]()
     let imagePicker = UIImagePickerController()
-    var collectionCounter = 1
     
     //initializing listing at the very beginning
     let listing = Listing()
     
     override func viewDidLoad() {
+        validationDict = [imageGallery: false, titleField: false, descriptionField: false, addLocationButton: false, categoryPicker: false]
         super.viewDidLoad()
         
         //delegates
@@ -68,27 +70,32 @@ class AddItemVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     }
     
     func previewListing () {
-        
-        //setting up our listing object
-        let searchText = titleField.text.lowercaseString + " " + descriptionField.text.lowercaseString
-        listing.title = titleField.text
-        listing.user = PFUser.currentUser()!
-        listing.searchText = searchText
-        listing.listingDescription = descriptionField.text
-        listing.categories = [categoryPicker.titleLabel!.text!]
-        listing.images = []
-        if imageArray.count != 0 {
-            for image in imageArray {
-                let imageData = UIImageJPEGRepresentation(image, 1.0)
-                let imageFile = PFFile(data: imageData)
-                listing.images.append(imageFile)
+        if validate() {
+            //setting up our listing object
+            let searchText = titleField.text.lowercaseString + " " + descriptionField.text.lowercaseString
+            listing.title = titleField.text
+            listing.user = PFUser.currentUser()!
+            listing.searchText = searchText
+            listing.listingDescription = descriptionField.text
+            listing.categories = [categoryPicker.titleLabel!.text!]
+            listing.images = []
+            if imageArray.count != 0 {
+                for image in imageArray {
+                    let imageData = UIImageJPEGRepresentation(image, 1.0)
+                    let imageFile = PFFile(data: imageData)
+                    listing.images.append(imageFile)
+                }
             }
+            //making sure that the listing is not published before pushing on the preview view. In the previewView, the user can look at how his listing would look and then publish it.
+            listing.published = false
+            let detailVC = storyboard?.instantiateViewControllerWithIdentifier("DetailVC") as! DetailVC
+            detailVC.currentListing = listing
+            navigationController?.pushViewController(detailVC, animated: true)
+
+        } else {
+            let alert = UIAlertView(title: "Finish Listing", message: "Please fill in the remaining fields. Title and textview need to be a certain length", delegate: nil, cancelButtonTitle: "Okay")
+            alert.show()
         }
-        //making sure that the listing is not published before pushing on the preview view. In the previewView, the user can look at how his listing would look and then publish it.
-        listing.published = false
-        let detailVC = storyboard?.instantiateViewControllerWithIdentifier("DetailVC") as! DetailVC
-        detailVC.currentListing = listing
-        navigationController?.pushViewController(detailVC, animated: true)
     }
     
     func pickCategory() {
@@ -119,13 +126,17 @@ class AddItemVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         setBorder(categoryPicker, finished: true)
     }
     
+    //setting borders to reflect whether a user has filled in a field appropriately or whether it still needs work
     func setBorder (borderObject: UIView, finished: Bool) {
         borderObject.layer.cornerRadius = 5
         borderObject.layer.borderWidth = 1
         if finished {
             borderObject.layer.borderColor = UIColor.greenColor().CGColor
+            //change state of the validationDict to reflect being finished
+            validationDict[borderObject] = true
         } else {
             borderObject.layer.borderColor = UIColor.blackColor().CGColor
+            validationDict[borderObject] = false
         }
     }
 
@@ -134,6 +145,24 @@ class AddItemVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         mapViewVC.delegate = self
         let navController = UINavigationController(rootViewController: mapViewVC)
         presentViewController(navController, animated: true, completion: nil)
+    }
+    
+    //checks to see whether all the fields have been filled appropriately. If not, it changes the border colors to red of the fields that have not been
+    func validate () -> Bool {
+        var counter = 0
+        for (view, bool) in validationDict {
+            if bool {
+                counter += 1
+                continue
+            } else {
+                view.layer.borderColor = UIColor.redColor().CGColor
+            }
+        }
+        if counter == 5 {
+            return true
+        } else {
+            return false
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {

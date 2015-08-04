@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -130,7 +130,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QM3-rj-Wv3">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QM3-rj-Wv3">
                                 <rect key="frame" x="-4" y="54" width="408" height="722"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Listing Title" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xNe-6Y-FVz">
@@ -222,14 +222,14 @@
                                                         <exclude reference="zwj-xF-1gI"/>
                                                     </mask>
                                                     <mask key="constraints">
-                                                        <exclude reference="4UD-VH-OtE"/>
-                                                        <exclude reference="Bhf-rM-sdw"/>
-                                                        <exclude reference="oSk-x8-PuH"/>
-                                                        <exclude reference="qRd-1i-pnq"/>
                                                         <exclude reference="7OC-Gt-iUZ"/>
                                                         <exclude reference="BJF-Ow-vAh"/>
                                                         <exclude reference="1YU-km-pqb"/>
                                                         <exclude reference="ywz-gP-fQ6"/>
+                                                        <exclude reference="4UD-VH-OtE"/>
+                                                        <exclude reference="Bhf-rM-sdw"/>
+                                                        <exclude reference="oSk-x8-PuH"/>
+                                                        <exclude reference="qRd-1i-pnq"/>
                                                     </mask>
                                                 </variation>
                                                 <variation key="heightClass=regular-widthClass=compact">
@@ -239,14 +239,14 @@
                                                         <include reference="zwj-xF-1gI"/>
                                                     </mask>
                                                     <mask key="constraints">
-                                                        <include reference="4UD-VH-OtE"/>
-                                                        <include reference="Bhf-rM-sdw"/>
-                                                        <include reference="oSk-x8-PuH"/>
-                                                        <include reference="qRd-1i-pnq"/>
                                                         <include reference="7OC-Gt-iUZ"/>
                                                         <include reference="BJF-Ow-vAh"/>
                                                         <include reference="1YU-km-pqb"/>
                                                         <include reference="ywz-gP-fQ6"/>
+                                                        <include reference="4UD-VH-OtE"/>
+                                                        <include reference="Bhf-rM-sdw"/>
+                                                        <include reference="oSk-x8-PuH"/>
+                                                        <include reference="qRd-1i-pnq"/>
                                                     </mask>
                                                 </variation>
                                                 <connections>
@@ -402,19 +402,19 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="bNI-VZ-iNa"/>
                                 <exclude reference="0C9-5p-hJr"/>
                                 <exclude reference="Ru5-M9-s2n"/>
                                 <exclude reference="eBe-R2-vTa"/>
-                                <exclude reference="bNI-VZ-iNa"/>
                                 <exclude reference="fgS-xl-NF3"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="constraints">
+                                <exclude reference="bNI-VZ-iNa"/>
                                 <include reference="0C9-5p-hJr"/>
                                 <include reference="Ru5-M9-s2n"/>
                                 <include reference="eBe-R2-vTa"/>
-                                <exclude reference="bNI-VZ-iNa"/>
                                 <include reference="fgS-xl-NF3"/>
                             </mask>
                         </variation>
@@ -616,6 +616,7 @@
                         <viewControllerLayoutGuide type="bottom" id="1fj-63-ahC"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ov3-E1-tI3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" pitchEnabled="NO" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s4D-sl-vCg">
@@ -634,10 +635,10 @@
                                 <exclude reference="s4D-sl-vCg"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="uBO-zX-oFK"/>
                                 <exclude reference="XoK-rj-cul"/>
                                 <exclude reference="fHq-XG-oFT"/>
                                 <exclude reference="qUc-N6-OH6"/>
-                                <exclude reference="uBO-zX-oFK"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -645,10 +646,10 @@
                                 <include reference="s4D-sl-vCg"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="uBO-zX-oFK"/>
                                 <include reference="XoK-rj-cul"/>
                                 <include reference="fHq-XG-oFT"/>
                                 <include reference="qUc-N6-OH6"/>
-                                <include reference="uBO-zX-oFK"/>
                             </mask>
                         </variation>
                     </view>
