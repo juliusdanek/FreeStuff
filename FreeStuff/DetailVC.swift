@@ -43,6 +43,8 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
                 imageArray = listing.images
             }
             listingTitle.text = listing.title
+            //make sure to adjust the font size so the whole label fits
+            listingTitle.adjustsFontSizeToFitWidth = true
 
             listingDescription.text = listing.listingDescription
             
@@ -51,9 +53,9 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
                 PFGeoPoint.geoPointForCurrentLocationInBackground({ (currentGeoPoint, error) -> Void in
                     let distance = Int(currentGeoPoint!.distanceInMilesTo(geopoint))
                     if distance == 0 {
-                        self.distanceButton.title = NSString(string: " 🚗 <1") as String
+                        self.distanceButton.title = NSString(string: "<1") as String
                     } else if distance > 100 {
-                        self.distanceButton.title = " 🚗 >100"
+                        self.distanceButton.title = ">100"
                     } else {
                         self.distanceButton.title = "\(distance)"
                     }
@@ -100,19 +102,26 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         loadVisiblePages()
     }
     
+    //present an alert view that asks user whether he wants to publish or not
     func publish () {
-        currentListing?.published = true
-        let activityView = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
-        activityView.center = self.view.center
-        activityView.startAnimating()
-        view.addSubview(activityView)
-        currentListing?.saveInBackgroundWithBlock({ (success, error) -> Void in
-            if success {
-                activityView.removeFromSuperview()
-                activityView.stopAnimating()
-                self.dismissViewControllerAnimated(true, completion: nil)
-            }
-        })
+        let alert = UIAlertController(title: "Publish Listing", message: "Do you want to publish this listing?", preferredStyle: .Alert)
+        //if yes, then post the listing and show an animating activity view while doing so. If success, dismiss viewcontroller
+        alert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action) -> Void in
+            self.currentListing?.published = true
+            let activityView = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+            activityView.center = self.view.center
+            activityView.startAnimating()
+            self.view.addSubview(activityView)
+            self.currentListing?.saveInBackgroundWithBlock({ (success, error) -> Void in
+                if success {
+                    activityView.removeFromSuperview()
+                    activityView.stopAnimating()
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }
+            })
+        }))
+        alert.addAction(UIAlertAction(title: "No", style: .Cancel, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     //From: http://www.raywenderlich.com/76436/use-uiscrollview-scroll-zoom-content-swift
@@ -202,6 +211,10 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         for var index = lastPage+1; index < imageArray.count; ++index {
             purgePage(index)
         }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        self.tabBarController?.tabBar.hidden = false
     }
 
 

@@ -97,6 +97,7 @@ class ProductViewController: PFQueryTableViewController, UISearchBarDelegate {
         //getting the title and images
         if let currentListing = object as? Listing {
             cell?.title.text = currentListing.title
+            cell?.title.adjustsFontSizeToFitWidth = true
             if currentListing.images.count != 0 {
                 cell?.listingImage.file = currentListing.images[0]
                 cell?.listingImage.loadInBackground()

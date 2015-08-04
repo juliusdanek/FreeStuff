@@ -43,7 +43,7 @@ class AddItemVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         
         //prepare navigation bar
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "dismiss")
-        navigationItem.title = "Add Listing"
+        navigationItem.title = "Edit Listing"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Preview", style: .Plain, target: self, action: "previewListing")
         
         //configuring imageGallery
@@ -93,7 +93,7 @@ class AddItemVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             navigationController?.pushViewController(detailVC, animated: true)
 
         } else {
-            let alert = UIAlertView(title: "Finish Listing", message: "Please fill in the remaining fields. Title and textview need to be a certain length", delegate: nil, cancelButtonTitle: "Okay")
+            let alert = UIAlertView(title: "Listing not finished", message: "Please fill in the remaining fields. Bear in mind that title and description need to have a certain length", delegate: nil, cancelButtonTitle: "Okay")
             alert.show()
         }
     }

@@ -23,6 +23,10 @@ extension AddItemVC {
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         if count(textField.text) < 5 {
             setBorder(titleField, finished: false)
+        } else if count(textField.text) > 30 {
+            //set it red additionally to indicate that this is wrong
+            setBorder(titleField, finished: false)
+            textField.layer.borderColor = UIColor.redColor().CGColor
         } else {
             setBorder(titleField, finished: true)
         }
