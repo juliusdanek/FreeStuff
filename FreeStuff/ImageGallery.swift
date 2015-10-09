@@ -65,7 +65,7 @@ extension AddItemVC {
         }, completion: nil)
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         //if image has been edited, display edited image.
         if let pickedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
             imageArray.append(pickedImage)
@@ -84,6 +84,7 @@ extension AddItemVC {
         imagePicker.sourceType = sourceType
         self.presentViewController(imagePicker, animated: true, completion: nil)
     }
+    
     
     
 }

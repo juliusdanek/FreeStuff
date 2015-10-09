@@ -22,7 +22,7 @@ class ProductViewController: PFQueryTableViewController, UISearchBarDelegate {
         super.init(style: style, className: className)
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
         // Configure the PFQueryTableView
@@ -60,7 +60,7 @@ class ProductViewController: PFQueryTableViewController, UISearchBarDelegate {
     
     //MARK: TableView methods
     override func queryForTable() -> PFQuery {
-        var query:PFQuery = PFQuery(className:self.parseClassName!)
+        let query:PFQuery = PFQuery(className:self.parseClassName!)
         PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
             self.userLocation = geoPoint
         }
@@ -70,7 +70,7 @@ class ProductViewController: PFQueryTableViewController, UISearchBarDelegate {
         }
         
         if searchBar.text != "" {
-            query.whereKey("searchText", containsString: searchBar.text.lowercaseString)
+            query.whereKey("searchText", containsString: searchBar.text!.lowercaseString)
         }
         
         //MARK: Think about caching later

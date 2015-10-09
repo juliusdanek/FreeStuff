@@ -18,11 +18,16 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var listingDescription: UITextView!
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var distanceButton: UIBarButtonItem!
+    //TODO: Implement claims Button
+    @IBOutlet weak var claimButton: UIBarButtonItem!
+    @IBOutlet weak var favoriteButton: UIBarButtonItem!
     
     var currentListing: Listing?
     
     var imageArray: [PFFile] = []
     var imageViewArray: [PFImageView?] = []
+    
+    var favorited: Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,13 +36,32 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         
         scrollView.delegate = self
         
+        //TODO: Standard way for favorited. If Parse doesn't load quickly enough, then the favorited button causes app to crash since it is nil
+        self.favorited = false
+        
         //checking whether a listing has been passed, then configuring the view
         if let listing = currentListing {
+            //TODO: Clean this function
+            PFUser.currentUser()?.relationForKey("favoritedListings").query()!.whereKey("objectId", equalTo: listing.objectId!).countObjectsInBackgroundWithBlock({ (objects, error) -> Void in
+                if objects != 0 {
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.favoriteButton.image = UIImage(named: "Like_Filled-32")
+                        self.favorited = true
+                    })
+                } else {
+                    self.favorited = false
+                }
+            })
             
             //if it isn't published, show the publishing button
             if listing.published == false {
                 navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Publish", style: .Plain, target: self, action: "publish")
+                favoriteButton.enabled = false
+                claimButton.enabled = false
             }
+            
+            favoriteButton.action = "favorite"
+            favoriteButton.target = self
             
             if listing.images.count != 0 {
                 imageArray = listing.images
@@ -69,8 +93,6 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         for _ in 0..<imageArray.count {
             imageViewArray.append(nil)
         }
-
-
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -102,6 +124,32 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         loadVisiblePages()
     }
     
+    //favorite function. Add object to user favorite in Parse. When object saves successfully, then change favorite button.
+    //TODO: Shorten function, write encapsulation
+    func favorite () {
+        if self.favorited == true {
+            PFUser.currentUser()?.relationForKey("favoritedListings").removeObject(currentListing!)
+            PFUser.currentUser()?.saveInBackgroundWithBlock({ (success, error) -> Void in
+                if success {
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.favoriteButton.image = UIImage(named: "Like-32")
+                        self.favorited = false
+                    })
+                }
+            })
+        } else {
+            PFUser.currentUser()?.relationForKey("favoritedListings").addObject(currentListing!)
+            PFUser.currentUser()?.saveInBackgroundWithBlock({ (success, error) -> Void in
+                if success {
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.favoriteButton.image = UIImage(named: "Like_Filled-32")
+                        self.favorited = true
+                    })
+                }
+            })
+        }
+    }
+    
     //present an alert view that asks user whether he wants to publish or not
     func publish () {
         let alert = UIAlertController(title: "Publish Listing", message: "Do you want to publish this listing?", preferredStyle: .Alert)
@@ -109,13 +157,20 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         alert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action) -> Void in
             self.currentListing?.published = true
             let activityView = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+            activityView.color = UIColor.blackColor()
             activityView.center = self.view.center
+            activityView.hidesWhenStopped = true
             activityView.startAnimating()
-            self.view.addSubview(activityView)
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.view.addSubview(activityView)
+            })
+            PFUser.currentUser()!.relationForKey("postedListings").addObject(self.currentListing!)
             self.currentListing?.saveInBackgroundWithBlock({ (success, error) -> Void in
                 if success {
-                    activityView.removeFromSuperview()
-                    activityView.stopAnimating()
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        activityView.stopAnimating()
+                    })
+                    PFUser.currentUser()!.saveInBackground()
                     self.dismissViewControllerAnimated(true, completion: nil)
                 }
             })

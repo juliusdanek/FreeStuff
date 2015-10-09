@@ -36,7 +36,7 @@ class CategoryVC: UITableViewController {
     
     //Populating table and making sure that only one cell is selected with a checkmark
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("categoryCell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("categoryCell", forIndexPath: indexPath) 
         
         cell.textLabel?.text = Categories.categoryArray[indexPath.row]
         

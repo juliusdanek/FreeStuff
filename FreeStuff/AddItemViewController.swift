@@ -72,9 +72,8 @@ class AddItemVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     func previewListing () {
         if validate() {
             //setting up our listing object
-            let searchText = titleField.text.lowercaseString + " " + descriptionField.text.lowercaseString
+            let searchText = titleField.text!.lowercaseString + " " + descriptionField.text.lowercaseString
             listing.title = titleField.text
-            listing.user = PFUser.currentUser()!
             listing.searchText = searchText
             listing.listingDescription = descriptionField.text
             listing.categories = [categoryPicker.titleLabel!.text!]
@@ -82,8 +81,8 @@ class AddItemVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             if imageArray.count != 0 {
                 for image in imageArray {
                     let imageData = UIImageJPEGRepresentation(image, 1.0)
-                    let imageFile = PFFile(data: imageData)
-                    listing.images.append(imageFile)
+                    let imageFile = PFFile(data: imageData!)
+                    listing.images.append(imageFile!)
                 }
             }
             //making sure that the listing is not published before pushing on the preview view. In the previewView, the user can look at how his listing would look and then publish it.

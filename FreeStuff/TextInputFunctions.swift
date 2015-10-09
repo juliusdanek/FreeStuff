@@ -21,9 +21,9 @@ extension AddItemVC {
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        if count(textField.text) < 5 {
+        if textField.text!.characters.count < 5 {
             setBorder(titleField, finished: false)
-        } else if count(textField.text) > 30 {
+        } else if textField.text!.characters.count > 30 {
             //set it red additionally to indicate that this is wrong
             setBorder(titleField, finished: false)
             textField.layer.borderColor = UIColor.redColor().CGColor
@@ -40,7 +40,7 @@ extension AddItemVC {
     
     //if text changes and we have text, change border color to green
     func textViewDidChange(textView: UITextView) {
-        if count(textView.text) > 19 {
+        if textView.text.characters.count > 19 {
             setBorder(descriptionField, finished: true)
         } else {
             setBorder(descriptionField, finished: false)

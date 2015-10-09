@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>CD327C7B-781E-4BA6-8276-C8F155778DE7</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>FreeStuff</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>3DD09B98A1B4C77893C8E0925337A18D32C85F07</key>
 		<string>https://github.com/juliusdanek/FreeStuff.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>FreeStuff.xcodeproj/project.xcworkspace</string>
+	<string>FreeStuff.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>3DD09B98A1B4C77893C8E0925337A18D32C85F07</key>

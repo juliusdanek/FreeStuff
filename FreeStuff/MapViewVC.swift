@@ -68,17 +68,17 @@ class MapViewVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
         localSearch.startWithCompletionHandler { (localSearchResponse, error) -> Void in
             
             if localSearchResponse == nil{
-                var alert = UIAlertView(title: nil, message: "Place not found", delegate: self, cancelButtonTitle: "Try again")
+                let alert = UIAlertView(title: nil, message: "Place not found", delegate: self, cancelButtonTitle: "Try again")
                 alert.show()
                 return
             }
             //3
             self.pointAnnotation = MKPointAnnotation()
             self.pointAnnotation.title = searchBar.text
-            self.coordinate = CLLocationCoordinate2D(latitude: localSearchResponse.boundingRegion.center.latitude, longitude:     localSearchResponse.boundingRegion.center.longitude)
+            self.coordinate = CLLocationCoordinate2D(latitude: localSearchResponse!.boundingRegion.center.latitude, longitude:     localSearchResponse!.boundingRegion.center.longitude)
             self.pointAnnotation.coordinate = self.coordinate!
             self.pinAnnotationView = MKPinAnnotationView(annotation: self.pointAnnotation, reuseIdentifier: nil)
-            self.mapView.addAnnotation(self.pinAnnotationView.annotation)
+            self.mapView.addAnnotation(self.pinAnnotationView.annotation!)
             
             let viewRegion = MKCoordinateRegionMakeWithDistance(self.pointAnnotation.coordinate, 500, 500)
             let adjustedRegion = self.mapView.regionThatFits(viewRegion)
@@ -87,7 +87,7 @@ class MapViewVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
         }
     }
     
-    func mapView(mapView: MKMapView!, didChangeUserTrackingMode mode: MKUserTrackingMode, animated: Bool) {
+    func mapView(mapView: MKMapView, didChangeUserTrackingMode mode: MKUserTrackingMode, animated: Bool) {
         if mode == .Follow {
             if mapView.annotations.count != 0 {
                 mapView.removeAnnotations(mapView.annotations)
@@ -96,7 +96,7 @@ class MapViewVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
             coordinate = mapView.userLocation.coordinate
             pointAnnotation.coordinate = coordinate!
             pinAnnotationView = MKPinAnnotationView(annotation: pointAnnotation, reuseIdentifier: nil)
-            mapView.addAnnotation(pinAnnotationView.annotation)
+            mapView.addAnnotation(pinAnnotationView.annotation!)
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "dismiss")
         }
     }
@@ -109,6 +109,8 @@ class MapViewVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
                     self.dismissViewControllerAnimated(true, completion: nil)
                 }
             })
+        } else {
+            self.dismissViewControllerAnimated(true, completion: nil)
         }
     }
     
@@ -117,7 +119,7 @@ class MapViewVC: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
         let geoLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         geoCoder.reverseGeocodeLocation(geoLocation, completionHandler: { (placemarks, error) -> Void in
             if error == nil {
-                let placemark = placemarks[0] as! CLPlacemark
+                let placemark = placemarks![0] 
                 if let city = placemark.locality {
                     completitionHandler(success: true, error: nil, place: city)
                 }

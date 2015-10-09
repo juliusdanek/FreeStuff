@@ -20,8 +20,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Listing.registerSubclass()
         Parse.setApplicationId("jeA3EeENcGwoG2PmGoFdhh8QRr77gsRTbJMRETkN",
             clientKey: "oKSkzRobkrSnaizae1Q9tPA6hrJylbgMggtW1o5S")
+        
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         // Override point for customization after application launch.
+        
+        // Register for Push Notitications
+        if application.applicationState != UIApplicationState.Background {
+            // Track an app open here if we launch with a push, unless
+            // "content_available" was used to trigger a background push (introduced in iOS 7).
+            // In that case, we skip tracking here to avoid double counting the app-open.
+            
+            let preBackgroundPush = !application.respondsToSelector("backgroundRefreshStatus")
+            let oldPushHandlerOnly = !self.respondsToSelector("application:didReceiveRemoteNotification:fetchCompletionHandler:")
+            var pushPayload = false
+            if let options = launchOptions {
+                pushPayload = options[UIApplicationLaunchOptionsRemoteNotificationKey] != nil
+            }
+            if (preBackgroundPush || oldPushHandlerOnly || pushPayload) {
+                PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
+            }
+        }
+        if application.respondsToSelector("registerUserNotificationSettings:") {
+            let userNotificationTypes: UIUserNotificationType = [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]
+            let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
+            application.registerUserNotificationSettings(settings)
+            application.registerForRemoteNotifications()
+        } else {
+            let types: UIRemoteNotificationType = [UIRemoteNotificationType.Badge, UIRemoteNotificationType.Alert, UIRemoteNotificationType.Sound]
+            application.registerForRemoteNotificationTypes(types)
+        }
         
         //make sure that user is uniquely identified on Parse database by calling signup function
         signup()
@@ -58,29 +85,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        let installation = PFInstallation.currentInstallation()
+        installation.setDeviceTokenFromData(deviceToken)
+        installation.saveInBackground()
+    }
+    
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        if error.code == 3010 {
+            print("Push notifications are not supported in the iOS Simulator.")
+        } else {
+            print("application:didFailToRegisterForRemoteNotificationsWithError: %@", error)
+        }
+    }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        PFPush.handlePush(userInfo)
+        if application.applicationState == UIApplicationState.Inactive {
+            PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
+        }
+    }
+    
     //TODO: Might have to store some stuff in keychain because Vendor ID does not stay the same across device
     func signup() {
         //checking if there is a user cached
-        var currentUser = PFUser.currentUser()
+        let currentUser = PFUser.currentUser()
         if currentUser != nil {
             //simple return statements
             return
         } else {
             //if not, try to log in with the unique device ID --> All listings will always be associated with a device
-            PFUser.logInWithUsernameInBackground(UIDevice.currentDevice().identifierForVendor.UUIDString, password:"FreeStuff") {
+            PFUser.logInWithUsernameInBackground(UIDevice.currentDevice().identifierForVendor!.UUIDString, password:"FreeStuff") {
                 (user: PFUser?, error: NSError?) -> Void in
                 if user != nil {
-                    println("successful login")
+                    print("successful login")
                     // Do stuff after successful login.
                 } else {
                     //if you can't log in, sign the user up using the device ID and the same password
-                    var user = PFUser()
-                    user.username = UIDevice.currentDevice().identifierForVendor.UUIDString
+                    let user = PFUser()
+                    user.username = UIDevice.currentDevice().identifierForVendor!.UUIDString
                     user.password = "FreeStuff"
                     // other fields can be set just like with PFObject
                     user.signUpInBackgroundWithBlock({ (success, error) -> Void in
                         if let error = error {
-                            let errorString = error.userInfo?["error"] as? NSString
+                            let errorString = error.userInfo["error"] as? NSString
                         } else {
                             return
                         }

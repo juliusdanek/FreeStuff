@@ -23,5 +23,4 @@ class Listing: PFObject, PFSubclassing {
     @NSManaged var location: PFGeoPoint?
     @NSManaged var published: Bool
     @NSManaged var searchText: String?
-    @NSManaged var user: PFUser
 }
